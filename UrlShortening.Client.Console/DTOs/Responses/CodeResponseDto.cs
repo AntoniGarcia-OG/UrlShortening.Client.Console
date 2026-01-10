@@ -1,0 +1,10 @@
+﻿namespace UrlShortening.Client.Console.DTOs.Responses
+{
+    public sealed class CodeResponseDto
+    {
+        public string OriginalUrl { get; init; } = string.Empty;
+        public string Code { get; init; } = string.Empty;
+
+        public DateTime CreatedAt { get; init; }
+    }
+}

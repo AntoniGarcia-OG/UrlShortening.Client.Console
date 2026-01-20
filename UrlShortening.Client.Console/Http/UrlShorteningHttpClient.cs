@@ -13,6 +13,17 @@ namespace UrlShortening.Client.Console.Http
             _httpClient = httpClient;
         }
 
+        public async Task<HttpResponseMessage> ResolveAndUpdateDataAsync(string code)
+        {
+            HttpResponseMessage result = await _httpClient.GetAsync($"/redirect/{code}", HttpCompletionOption.ResponseHeadersRead);
+
+            if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                throw new HttpException(404, "Not Found");
+            }
+
+            return result;
+        }
 
         private static async Task<HttpException> CreateHttpException(HttpResponseMessage responseMessage)
         {

@@ -25,6 +25,19 @@ namespace UrlShortening.Client.Console.Http
             return result;
         }
 
+        public async Task<CodeResponseDto> CreateAsync(string originalUrl)
+        {
+            CreateCodeDto dto = new() { OriginalUrl = originalUrl };
+
+            HttpResponseMessage result = await _httpClient.PostAsJsonAsync("/api/UrlMapping", dto);
+
+            if (!result.IsSuccessStatusCode)
+            {
+                throw await CreateHttpException(result);
+            }
+
+            return (await result.Content.ReadFromJsonAsync<CodeResponseDto>())!;
+        }
         private static async Task<HttpException> CreateHttpException(HttpResponseMessage responseMessage)
         {
             string message = await responseMessage.Content.ReadAsStringAsync();

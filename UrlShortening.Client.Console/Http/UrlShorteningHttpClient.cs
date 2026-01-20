@@ -38,6 +38,19 @@ namespace UrlShortening.Client.Console.Http
 
             return (await result.Content.ReadFromJsonAsync<CodeResponseDto>())!;
         }
+
+        public async Task<CodeAnalyticsDto> GetCodeAnalyticsAsync(string code)
+        {
+            HttpResponseMessage result = await _httpClient.GetAsync($"/api/UrlMapping/{code}/analytics");
+
+            if (!result.IsSuccessStatusCode)
+            {
+                throw await CreateHttpException(result);
+            }
+
+            return (await result.Content.ReadFromJsonAsync<CodeAnalyticsDto>())!;
+        }
+
         private static async Task<HttpException> CreateHttpException(HttpResponseMessage responseMessage)
         {
             string message = await responseMessage.Content.ReadAsStringAsync();

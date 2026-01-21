@@ -26,6 +26,24 @@ while (true)
 	Console.WriteLine();
 	try
 	{
+		switch (choice)
+		{
+			case "1":
+				await commands.RedirectionByCode();
+				
+				break;
+			case "2":
+				await commands.Create();
+				
+				break;
+			case "3":
+				await commands.GetCodeAnalytics();
+				
+				break;
+			case "0":
+				return;
+		}
+		Console.WriteLine();
 	}
 	catch (HttpException exception)
 	{
